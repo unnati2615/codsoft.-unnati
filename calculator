@@ -1,0 +1,130 @@
+[9:05 pm, 10/7/2024] Yashika: <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="calculator">
+        <div class="display" id="display">0</div>
+        <div class="buttons">
+            <button class="btn" id="clear">C</button>
+            <button class="btn" id="delete">DEL</button>
+            <button class="btn" data-operator="/">/</button>
+            <button class="btn" data-operator=""></button>
+            <button class="btn" data-number="7">7</button>
+            <button class="btn" data-number="8">8</button>
+            <button class="btn" data-number="9">9</button>
+            <button class="btn" data-operator="-">-</button>
+            <button class="btn" data-number="4">4</button>
+            <button class="btn" data-number="5">5</button>
+            <button class="btn" data-number="6">6</button>
+            <button class="btn" data-operator="+">+</button>
+            <button class="btn" data-number="1">1</button>
+            <button class="btn" data-number="2">2</button>
+            <button class="btn" data-number="3">3</button>
+            <button class="btn equal" id="equal">=</button>
+            <button class="btn zero" data-number="0">0</button>
+            <button class="btn dot" data-dot=".">.</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+[9:05 pm, 10/7/2024] Yashika: /* styles.css */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f5f5f5;
+    font-family: Arial, sans-serif;
+}
+
+.calculator {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 300px;
+}
+
+.display {
+    background-color: #222;
+    color: #fff;
+    font-size: 2em;
+    padding: 20px;
+    text-align: right;
+}.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.btn {
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    font-size: 1.5em;
+    padding: 20px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #eaeaea;
+}
+
+.equal {
+    grid-column: span 2;
+    background-color: #4caf50;
+    color: #fff;
+}
+
+.equal:hover {
+    background-color: #45a049;
+}
+
+.zero {
+    grid-column: span 2;
+}
+[9:05 pm, 10/7/2024] Yashika: // script.js
+const display = document.getElementById('display');
+const buttons = Array.from(document.getElementsByClassName('btn'));
+
+buttons.map(button => {
+    button.addEventListener('click', (e) => {
+        const value = e.target.innerText;
+        
+        switch(value) {
+            case 'C':
+                display.innerText = '0';
+                break;
+            case 'DEL':
+                if (display.innerText.length > 1) {
+                    display.innerText = display.innerText.slice(0, -1);
+                } else {
+                    display.innerText = '0';
+                }
+                break;
+            case '=':
+                try {
+                    display.innerText = eval(display.innerText);
+                } catch {
+                    display.innerText = 'Error';
+                }
+                break;
+            case '.':
+                if (!display.innerText.includes('.')) {
+                    display.innerText += '.';
+                }
+                break;
+            default:
+                if (display.innerText === '0') {
+                    display.innerText = value;
+                } else {
+                    display.innerText += value;
+                }
+        }
+    });
+});
